@@ -20,7 +20,7 @@ SSD 200 GB
 
 **Machine Type (Optional)**
 
-	标准型S3	S3.20XLARGE320	80核	320GB	Intel Xeon Skylake 6133(2.5 GHz)	10Gbps	85万PPS
+S3.20XLARGE320	80核	320GB
 
 **Command Lines for Running Cluster**
 ```
