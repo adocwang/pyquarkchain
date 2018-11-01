@@ -9,7 +9,6 @@ import psutil
 
 from quarkchain.cluster.cluster_config import ClusterConfig
 
-
 PYTHON = "pypy3" if platform.python_implementation() == "PyPy" else "python3"
 
 
@@ -76,14 +75,16 @@ class Cluster:
         self.procs.append((prefix, master))
 
     async def run_slaves(self):
-        for slave in self.config.SLAVE_LIST:
-            s = await run_slave(self.config.json_filepath, slave.ID)
-            prefix = "{}SLAVE_{}".format(self.cluster_id, slave.ID)
-            asyncio.ensure_future(print_output(prefix, s.stdout))
-            self.procs.append((prefix, s))
+        # for slave in self.config.SLAVE_LIST:
+        slave = self.config.SLAVE_LIST[self.config.SLAVE_ID]
+        s = await run_slave(self.config.json_filepath, slave.ID)
+        prefix = "{}SLAVE_{}".format(self.cluster_id, slave.ID)
+        asyncio.ensure_future(print_output(prefix, s.stdout))
+        self.procs.append((prefix, s))
 
     async def run(self):
-        await self.run_master()
+        if self.config.IS_MASTER:
+            await self.run_master()
         await self.run_slaves()
 
         await asyncio.gather(

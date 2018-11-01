@@ -38,7 +38,7 @@ def update_genesis_alloc(cluser_config):
             address = Address.create_from(item["address"])
             shard = address.get_shard_id(qkc_config.SHARD_SIZE)
             qkc_config.SHARD_LIST[shard].GENESIS.ALLOC[item["address"]] = 1000000 * (
-                10 ** 18
+                    10 ** 18
             )
 
         Logger.info(
@@ -128,8 +128,10 @@ class ClusterConfig(BaseConfig):
     LOG_LEVEL = "info"
 
     MINE = False
+    IS_MASTER = False
     CLEAN = False
     GENESIS_DIR = None
+    SLAVE_ID = 0
 
     QUARKCHAIN = None
     MASTER = None
@@ -143,6 +145,7 @@ class ClusterConfig(BaseConfig):
         self.QUARKCHAIN = QuarkChainConfig()
         self.MASTER = MasterConfig()
         self.SLAVE_LIST = []
+        self.SLAVE_IPS = []
         self.SIMPLE_NETWORK = SimpleNetworkConfig()
         self._json_filepath = None
         self.MONITORING = MonitoringConfig()
@@ -195,6 +198,11 @@ class ClusterConfig(BaseConfig):
         parser.add_argument(
             "--mine", action="store_true", default=ClusterConfig.MINE, dest="mine"
         )
+        parser.add_argument(
+            "--is_master", action="store_true", default=ClusterConfig.IS_MASTER, dest="is_master"
+        )
+        parser.add_argument("--slave_id", default=ClusterConfig.SLAVE_ID, type=int)
+        parser.add_argument("--slave_ips", default="127.0.0.1", type=str)
         pwd = os.path.dirname(os.path.abspath(__file__))
         default_genesis_dir = os.path.join(pwd, "../genesis_data")
         parser.add_argument("--genesis_dir", default=default_genesis_dir, type=str)
@@ -276,6 +284,8 @@ class ClusterConfig(BaseConfig):
 
             config.CLEAN = args.clean
             config.MINE = args.mine
+            config.SLAVE_ID = args.slave_id
+            config.IS_MASTER = args.is_master
             config.ENABLE_TRANSACTION_HISTORY = args.enable_transaction_history
 
             config.QUARKCHAIN.update(
@@ -310,8 +320,13 @@ class ClusterConfig(BaseConfig):
                 )
 
             config.SLAVE_LIST = []
+            slave_ip_list = args.slave_ips.split(",")
+
+            if len(slave_ip_list) > 1:
+                args.num_slaves = len(slave_ip_list)
             for i in range(args.num_slaves):
                 slave_config = SlaveConfig()
+                slave_config.IP = slave_ip_list[i]
                 slave_config.PORT = args.port_start + i
                 slave_config.ID = "S{}".format(i)
                 slave_config.SHARD_MASK_LIST = [ShardMask(i | args.num_slaves)]

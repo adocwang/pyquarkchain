@@ -21,6 +21,7 @@ def _is_config_field(s: str):
 
 
 class BaseConfig:
+
     def to_dict(self):
         ret = dict()
         for k, v in self.__class__.__dict__.items():
