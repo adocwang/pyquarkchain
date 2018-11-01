@@ -4,11 +4,11 @@
 
 **Number of CPUs**
 
-160cpus per cluster, 2machines each have 80cpus.
+160cpus per cluster, 2 machines each have 80cpus.
 
 **Memory (GB)**
 
-320
+320 per machine
 
 **Storage (GB)**
 
@@ -20,11 +20,11 @@ SSD 200 GB
 
 **Machine Type (Optional)**
 
-S3.20XLARGE320	80核	320GB * 6
+S3.20XLARGE320	80核	320GB * 6 on Tencent Cloud
 
 **Command Lines for Running Cluster**
 ```
-
+change some code of cluster.py,so i can run codes below 
 cluster0:
 run this on 10.202.0.15
 pypy3 quarkchain/cluster/cluster.py --root_block_interval_sec=60 --minor_block_interval_sec=10 --num_shards=512 --num_slaves=64 --clean --slave_ips="10.202.0.7,10.202.0.15" --mine --slave_ids=1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63 --devp2p_enable --devp2p_ip=10.202.0.7
@@ -99,4 +99,4 @@ Timestamp                     TPS   Pending tx  Confirmed tx       BPS      SBPS
 
 **Additional Comment**
 
-make some changes of cluster.py,so i can run slaves on diffrent mechines. i'am running each cluster on 2 machines. if 4 machines runing TPS can make double. it turnds out that 100k TPS of quarkchain is realizable
+Make some changes of cluster.py,so i can run slaves on diffrent mechines. I'am running each cluster on 2 machines. If 4 machines runing TPS can make double. It turnds out that 100k TPS of quarkchain is realizable
