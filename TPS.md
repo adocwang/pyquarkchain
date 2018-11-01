@@ -97,5 +97,4 @@ Timestamp                     TPS   Pending tx  Confirmed tx       BPS      SBPS
 
 **Additional Comment**
 
-[If you have special setup, e.g., running a single cluster over multiple machines, the above questionnaire might not fit. Note down
-whatever you want us to know here to help evaluate the result.]
+make some changes of cluster.py,so i can run slaves on diffrent mechines. i'am running each cluster on 2 machines. if 4 machines runing TPS can make double. it turnds out that 100k TPS of quarkchain is realizable
