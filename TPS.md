@@ -26,8 +26,10 @@ S3.20XLARGE320	80核	320GB * 6
 ```
 
 cluster0:
-pypy3 quarkchain/cluster/cluster.py --root_block_interval_sec=60 --minor_block_interval_sec=10 --num_shards=512 --num_slaves=64 --clean --slave_ips="10.202.0.7,10.202.0.15" --mine --slave_ids=1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63 --devp2p_enable --devp2p_ip=10.202.0.6
-pypy3 quarkchain/cluster/cluster.py --root_block_interval_sec=60 --minor_block_interval_sec=10 --num_shards=512 --num_slaves=64 --clean --slave_ips="10.202.0.7,10.202.0.15" --mine --is_master --slave_ids=0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62 --devp2p_enable --devp2p_ip=10.202.0.6
+run this on 10.202.0.15
+pypy3 quarkchain/cluster/cluster.py --root_block_interval_sec=60 --minor_block_interval_sec=10 --num_shards=512 --num_slaves=64 --clean --slave_ips="10.202.0.7,10.202.0.15" --mine --slave_ids=1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63 --devp2p_enable --devp2p_ip=10.202.0.7
+run this on 10.202.0.7
+pypy3 quarkchain/cluster/cluster.py --root_block_interval_sec=60 --minor_block_interval_sec=10 --num_shards=512 --num_slaves=64 --clean --slave_ips="10.202.0.7,10.202.0.15" --mine --is_master --slave_ids=0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62 --devp2p_enable --devp2p_ip=10.202.0.7
 
 so other clusters,just change  --devp2p_bootstrap_host=10.202.0.6 --devp2p_ip=self_ip
 ```
