@@ -76,11 +76,13 @@ class Cluster:
 
     async def run_slaves(self):
         # for slave in self.config.SLAVE_LIST:
-        slave = self.config.SLAVE_LIST[self.config.SLAVE_ID]
-        s = await run_slave(self.config.json_filepath, slave.ID)
-        prefix = "{}SLAVE_{}".format(self.cluster_id, slave.ID)
-        asyncio.ensure_future(print_output(prefix, s.stdout))
-        self.procs.append((prefix, s))
+        slave_ids = self.config.SLAVE_IDS.split(",")
+        for slave_id in slave_ids:
+            slave = self.config.SLAVE_LIST[int(slave_id)]
+            s = await run_slave(self.config.json_filepath, slave.ID)
+            prefix = "{}SLAVE_{}".format(self.cluster_id, slave.ID)
+            asyncio.ensure_future(print_output(prefix, s.stdout))
+            self.procs.append((prefix, s))
 
     async def run(self):
         if self.config.IS_MASTER:

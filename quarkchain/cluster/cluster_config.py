@@ -131,7 +131,7 @@ class ClusterConfig(BaseConfig):
     IS_MASTER = False
     CLEAN = False
     GENESIS_DIR = None
-    SLAVE_ID = 0
+    SLAVE_IDS = "0"
 
     QUARKCHAIN = None
     MASTER = None
@@ -201,7 +201,7 @@ class ClusterConfig(BaseConfig):
         parser.add_argument(
             "--is_master", action="store_true", default=ClusterConfig.IS_MASTER, dest="is_master"
         )
-        parser.add_argument("--slave_id", default=ClusterConfig.SLAVE_ID, type=int)
+        parser.add_argument("--slave_ids", default=ClusterConfig.SLAVE_IDS, type=str)
         parser.add_argument("--slave_ips", default="127.0.0.1", type=str)
         pwd = os.path.dirname(os.path.abspath(__file__))
         default_genesis_dir = os.path.join(pwd, "../genesis_data")
@@ -284,7 +284,7 @@ class ClusterConfig(BaseConfig):
 
             config.CLEAN = args.clean
             config.MINE = args.mine
-            config.SLAVE_ID = args.slave_id
+            config.SLAVE_IDS = args.slave_ids
             config.IS_MASTER = args.is_master
             config.ENABLE_TRANSACTION_HISTORY = args.enable_transaction_history
 
