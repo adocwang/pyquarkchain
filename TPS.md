@@ -4,7 +4,7 @@
 
 **Number of CPUs**
 
-80
+160cpus per cluster, 2machines each have 80cpus.
 
 **Memory (GB)**
 
