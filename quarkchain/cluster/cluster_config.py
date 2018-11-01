@@ -321,12 +321,12 @@ class ClusterConfig(BaseConfig):
 
             config.SLAVE_LIST = []
             slave_ip_list = args.slave_ips.split(",")
-
-            if len(slave_ip_list) > 1:
-                args.num_slaves = len(slave_ip_list)
+            slave_ip_len = len(slave_ip_list)
+            # if len(slave_ip_list) > 1:
+            #     args.num_slaves = len(slave_ip_list)
             for i in range(args.num_slaves):
                 slave_config = SlaveConfig()
-                slave_config.IP = slave_ip_list[i]
+                slave_config.IP = slave_ip_list[(i % slave_ip_len)]
                 slave_config.PORT = args.port_start + i
                 slave_config.ID = "S{}".format(i)
                 slave_config.SHARD_MASK_LIST = [ShardMask(i | args.num_slaves)]
